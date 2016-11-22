@@ -42,7 +42,7 @@ public class Investment {
 	private Date dateMaturing;
 	
 	@OneToOne
-	@JoinColumn(name="id")
+	@JoinColumn(name="investment_type_id")
 	private InvestmentType investmentType;
 	
 	@Column(nullable = false)

@@ -34,7 +34,7 @@ public class Account {
 	private long id;
 
 	@OneToOne
-	@JoinColumn(name="id")
+	@JoinColumn(name="account_type_id")
 	private AccountType accountType;
 	
 	@Temporal(TemporalType.DATE)

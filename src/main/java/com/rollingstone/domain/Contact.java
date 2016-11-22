@@ -34,7 +34,7 @@ public class Contact {
 	private long id;
 
 	@OneToOne
-	@JoinColumn(name="id")
+	@JoinColumn(name="contact_type_id")
 	private ContactType contactType;
 	
 	@Temporal(TemporalType.DATE)

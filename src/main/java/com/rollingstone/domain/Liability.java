@@ -42,7 +42,7 @@ public class Liability {
 	private Date dateMaturing;
 	
 	@OneToOne
-	@JoinColumn(name="id")
+	@JoinColumn(name="liability_type_id")
 	private LiabilityType investmentType;
 
 	@Column(nullable = false)
@@ -68,6 +68,97 @@ public class Liability {
 
 	public long getId() {
 		return id;
+	}
+
+	public Date getFromDate() {
+		return fromDate;
+	}
+
+	public void setFromDate(Date fromDate) {
+		this.fromDate = fromDate;
+	}
+
+	public Date getDateMaturing() {
+		return dateMaturing;
+	}
+
+	public void setDateMaturing(Date dateMaturing) {
+		this.dateMaturing = dateMaturing;
+	}
+
+	public LiabilityType getInvestmentType() {
+		return investmentType;
+	}
+
+	public void setInvestmentType(LiabilityType investmentType) {
+		this.investmentType = investmentType;
+	}
+
+	public double getOriginalTotalLiability() {
+		return originalTotalLiability;
+	}
+
+	public void setOriginalTotalLiability(double originalTotalLiability) {
+		this.originalTotalLiability = originalTotalLiability;
+	}
+
+	public double getCurrentTotalLiability() {
+		return currentTotalLiability;
+	}
+
+	public void setCurrentTotalLiability(double currentTotalLiability) {
+		this.currentTotalLiability = currentTotalLiability;
+	}
+
+	public String getPaymentFrequency() {
+		return paymentFrequency;
+	}
+
+	public void setPaymentFrequency(String paymentFrequency) {
+		this.paymentFrequency = paymentFrequency;
+	}
+
+	public float getPeriodEMI() {
+		return periodEMI;
+	}
+
+	public void setPeriodEMI(float periodEMI) {
+		this.periodEMI = periodEMI;
+	}
+
+	public Customer getCustomer() {
+		return customer;
+	}
+
+	public void setCustomer(Customer customer) {
+		this.customer = customer;
+	}
+
+	public void setId(long id) {
+		this.id = id;
+	}
+
+	@Override
+	public String toString() {
+		return "Liability [id=" + id + ", fromDate=" + fromDate + ", dateMaturing=" + dateMaturing + ", investmentType="
+				+ investmentType + ", originalTotalLiability=" + originalTotalLiability + ", currentTotalLiability="
+				+ currentTotalLiability + ", paymentFrequency=" + paymentFrequency + ", periodEMI=" + periodEMI
+				+ ", customer=" + customer + "]";
+	}
+
+	public Liability(long id, Date fromDate, Date dateMaturing, LiabilityType investmentType,
+			double originalTotalLiability, double currentTotalLiability, String paymentFrequency, float periodEMI,
+			Customer customer) {
+		super();
+		this.id = id;
+		this.fromDate = fromDate;
+		this.dateMaturing = dateMaturing;
+		this.investmentType = investmentType;
+		this.originalTotalLiability = originalTotalLiability;
+		this.currentTotalLiability = currentTotalLiability;
+		this.paymentFrequency = paymentFrequency;
+		this.periodEMI = periodEMI;
+		this.customer = customer;
 	}
 
 	

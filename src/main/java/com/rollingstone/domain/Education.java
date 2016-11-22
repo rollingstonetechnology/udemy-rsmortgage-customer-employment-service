@@ -54,7 +54,7 @@ public class Education {
 	private String schoolName;
 	
 	@OneToOne
-	@JoinColumn(name="id")
+	@JoinColumn(name="degree_type_id")
 	private DegreeType degreeType;
 	
 	@Column(nullable = false)
