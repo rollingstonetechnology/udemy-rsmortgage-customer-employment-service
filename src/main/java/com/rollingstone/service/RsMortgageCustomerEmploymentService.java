@@ -14,6 +14,7 @@ import org.springframework.stereotype.Service;
 
 import com.rollingstone.dao.jpa.RsMortgageCustomerEmploymentRepository;
 import com.rollingstone.domain.Customer;
+import com.rollingstone.domain.Education;
 import com.rollingstone.domain.Employment;
 
 /*
@@ -32,20 +33,68 @@ public class RsMortgageCustomerEmploymentService {
 
     @Autowired
     GaugeService gaugeService;
+    
+    @Autowired
+   	private CustomerClient customerClient;
 
     public RsMortgageCustomerEmploymentService() {
     }
 
-    public Employment createEmployment(Employment employment) {
-        return customerEmploymentRepository.save(employment);
+    public Employment createEmployment(Employment employment) throws Exception {
+    	Employment createdEmployment = null;
+    	if (employment != null && employment.getCustomer() != null){
+    		
+    		log.info("In service employment create"+ employment.getCustomer().getId());
+    		if (customerClient == null){
+        		log.info("In customerClient null got customer");
+    		}
+    		else {
+    			log.info("In customerClient not null got customer");
+    		}
+    		
+    		Customer customer = customerClient.getCustomer((new Long(employment.getCustomer().getId())));
+    		
+    		if (customer != null){
+    			createdEmployment  = customerEmploymentRepository.save(employment);
+    		}else {
+    			log.info("Invalid Customer");
+    			throw new Exception("Invalid Customer");
+    		}
+    	}
+    	else {
+    			throw new Exception("Invalid Customer");
+    	}
+        return createdEmployment;
     }
 
     public Employment getEmployment(long id) {
         return customerEmploymentRepository.findOne(id);
     }
 
-    public void updateEmployment(Employment employment) {
-    	customerEmploymentRepository.save(employment);
+    public void updateEmployment(Employment employment) throws Exception {
+    	Employment createdEmployment = null;
+    	if (employment != null && employment.getCustomer() != null){
+    		
+    		log.info("In service employment create"+ employment.getCustomer().getId());
+    		if (customerClient == null){
+        		log.info("In customerClient null got customer");
+    		}
+    		else {
+    			log.info("In customerClient not null got customer");
+    		}
+    		
+    		Customer customer = customerClient.getCustomer((new Long(employment.getCustomer().getId())));
+    		
+    		if (customer != null){
+    			createdEmployment  = customerEmploymentRepository.save(employment);
+    		}else {
+    			log.info("Invalid Customer");
+    			throw new Exception("Invalid Customer");
+    		}
+    	}
+    	else {
+    			throw new Exception("Invalid Customer");
+    	}
     }
 
     public void deleteEmployment(Long id) {

@@ -39,7 +39,7 @@ public class CustomerEmploymentController extends AbstractRestController {
             produces = {"application/json", "application/xml"})
     @ResponseStatus(HttpStatus.CREATED)
     public void createCustomerEmployment(@RequestBody Employment education,
-                                 HttpServletRequest request, HttpServletResponse response) {
+                                 HttpServletRequest request, HttpServletResponse response) throws Exception {
     	Employment createdEmployment = this.customerEmploymentService.createEmployment(education);
         response.setHeader("Location", request.getRequestURL().append("/").append(createdEmployment.getId()).toString());
     }
@@ -108,7 +108,7 @@ public class CustomerEmploymentController extends AbstractRestController {
             produces = {"application/json", "application/xml"})
     @ResponseStatus(HttpStatus.NO_CONTENT)
     public void updateCustomerEmployment(@PathVariable("id") Long id, @RequestBody Employment education,
-                                 HttpServletRequest request, HttpServletResponse response) {
+                                 HttpServletRequest request, HttpServletResponse response) throws Exception {
         checkResourceFound(this.customerEmploymentService.getEmployment(id));
         if (id != education.getId()) throw new HTTP400Exception("ID doesn't match!");
         this.customerEmploymentService.updateEmployment(education);
