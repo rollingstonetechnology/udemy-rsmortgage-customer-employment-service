@@ -12,6 +12,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 
+import com.netflix.hystrix.contrib.javanica.annotation.HystrixCommand;
 import com.rollingstone.dao.jpa.RsMortgageCustomerEmploymentRepository;
 import com.rollingstone.domain.Customer;
 import com.rollingstone.domain.Education;
@@ -40,6 +41,7 @@ public class RsMortgageCustomerEmploymentService {
     public RsMortgageCustomerEmploymentService() {
     }
 
+    @HystrixCommand(fallbackMethod = "createEmploymentWithoutValidation")
     public Employment createEmployment(Employment employment) throws Exception {
     	Employment createdEmployment = null;
     	if (employment != null && employment.getCustomer() != null){
@@ -55,6 +57,7 @@ public class RsMortgageCustomerEmploymentService {
     		Customer customer = customerClient.getCustomer((new Long(employment.getCustomer().getId())));
     		
     		if (customer != null){
+    			log.info("Customer Validation Successful. Creating Employment with valid customer.");
     			createdEmployment  = customerEmploymentRepository.save(employment);
     		}else {
     			log.info("Invalid Customer");
@@ -67,6 +70,14 @@ public class RsMortgageCustomerEmploymentService {
         return createdEmployment;
     }
 
+    public Employment createEmploymentWithoutValidation(Employment employment) throws Exception {
+    	Employment createdEmployment = null;
+		log.info("Customer Validation Failed. Creating Employment without validation.");
+    	createdEmployment  = customerEmploymentRepository.save(employment);
+    	
+        return createdEmployment;
+    }
+    
     public Employment getEmployment(long id) {
         return customerEmploymentRepository.findOne(id);
     }
